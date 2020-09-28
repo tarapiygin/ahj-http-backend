@@ -17,6 +17,7 @@ module.exports = class TicketManager {
       ticket: new Ticket(id, name, status, created),
       ticketFull: new TicketFull(id, name, status, created, description),
     });
+    this.save();
   }
 
   getAllTickets() {
