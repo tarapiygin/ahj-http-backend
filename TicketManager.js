@@ -31,12 +31,12 @@ module.exports = class TicketManager {
 
   save() {
     const data = JSON.stringify(this.ticketsObj);
-    fs.writeFileSync('./tikets.json', data);
+    fs.writeFileSync('./tickets.json', data);
   }
 
   load() {
     const file = fs.readFileSync('./tickets.json', 'utf8');
-    if (file) this.ticketsObj = JSON.parse(file);
+    if (file !== '') this.ticketsObj = JSON.parse(file);
   }
 
   init() {
