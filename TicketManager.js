@@ -1,6 +1,8 @@
 const uuid = require('uuid');
+const fs = require('fs');
 const Ticket = require('./Ticket');
 const TicketFull = require('./TicketFull');
+const ticketsData = require('./tikets');
 
 module.exports = class TicketManager {
   constructor() {
@@ -27,15 +29,19 @@ module.exports = class TicketManager {
     return ticketObj.ticketFull;
   }
 
-  init() {
-    this.ticketsObj.push({
-      id: '1',
-      ticket: new Ticket('1', 'test', true, 1),
-      ticketFull: new TicketFull(1, 'test', true, 1, 'description'),
-    }, {
-      id: '2',
-      ticket: new Ticket('2', 'test', true, 1),
-      ticketFull: new TicketFull('2', 'test', true, 1, 'description'),
+  save() {
+    const data = JSON.stringify(this.ticketsObj);
+    fs.writeFile('./tikets.json', data, (err) => {
+      if (err) console.error(err);
     });
+  }
+
+  load() {
+    const data = JSON.parse(ticketsData);
+    if (data) this.ticketsObj = data;
+  }
+
+  init() {
+    this.load();
   }
 };
