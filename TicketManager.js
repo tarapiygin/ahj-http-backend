@@ -2,7 +2,6 @@ const uuid = require('uuid');
 const fs = require('fs');
 const Ticket = require('./Ticket');
 const TicketFull = require('./TicketFull');
-const ticketsData = require('./tikets');
 
 module.exports = class TicketManager {
   constructor() {
@@ -32,14 +31,12 @@ module.exports = class TicketManager {
 
   save() {
     const data = JSON.stringify(this.ticketsObj);
-    fs.writeFile('./tikets.json', data, (err) => {
-      if (err) console.error(err);
-    });
+    fs.writeFileSync('./tikets.json', data);
   }
 
   load() {
-    const data = JSON.parse(ticketsData);
-    if (data) this.ticketsObj = data;
+    const file = fs.readFileSync('./tickets.json', 'utf8');
+    if (file) this.ticketsObj = JSON.parse(file);
   }
 
   init() {
