@@ -35,7 +35,7 @@ app.use(async (ctx) => {
           ctx.response.status = 201;
         } catch (error) {
           ctx.response.status = 501;
-          ctx.response.body = 'Ошибка при создании тикета';
+          ctx.response.body = `Ошибка при создании тикета ${error}`;
         }
       } else {
         ctx.response.body = 'the method must be "POST"';
