@@ -30,10 +30,11 @@ app.use(async (ctx) => {
     case 'createTicket':
       if (ctx.request.method === 'POST') {
         try {
-          const { name, status, description } = ctx.request.body;
+          const { name, status, description } = JSON.parse(ctx.request.body);
           ticketManager.createTicketObj(name, status, description);
           ctx.response.status = 201;
         } catch (error) {
+          ctx.response.status = 501;
           ctx.response.body = error;
         }
       } else {
