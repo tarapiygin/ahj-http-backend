@@ -20,7 +20,6 @@ module.exports = class TicketManager {
   }
 
   updateTicket(id, name, status, description) {
-    console.log(description);
     const ticketObj = this.ticketsObj.find((t) => t.id === id);
     ticketObj.ticket.name = name;
     ticketObj.ticketFull.name = name;
