@@ -19,6 +19,17 @@ module.exports = class TicketManager {
     this.save();
   }
 
+  updateTicket(id, name, status, description) {
+    console.log(description);
+    const ticketObj = this.ticketsObj.find((t) => t.id === id);
+    ticketObj.ticket.name = name;
+    ticketObj.ticketFull.name = name;
+    ticketObj.ticket.status = status;
+    ticketObj.ticketFull.status = status;
+    if (description !== null || '') ticketObj.ticketFull.description = description;
+    this.save();
+  }
+
   deleteTicket(id) {
     const index = this.ticketsObj.findIndex((t) => t.id === id);
     this.ticketsObj.splice(index, 1);

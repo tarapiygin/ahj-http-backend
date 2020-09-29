@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 const http = require('http');
 const Koa = require('koa');
 const koaBody = require('koa-body');
@@ -45,7 +46,6 @@ app.use(async (ctx) => {
     case 'deleteTicket':
       if (ctx.request.method === 'POST') {
         try {
-          // eslint-disable-next-line no-shadow
           const { id } = JSON.parse(ctx.request.body);
           ticketManager.deleteTicket(id);
           ctx.response.status = 202;
@@ -58,12 +58,29 @@ app.use(async (ctx) => {
         ctx.response.status = 405;
       }
       return;
+    case 'updateTicket':
+      if (ctx.request.method === 'POST') {
+        try {
+          const {
+            id,
+            name,
+            status,
+            description,
+          } = JSON.parse(ctx.request.body);
+          ticketManager.updateTicket(id, name, status, description);
+          ctx.response.status = 202;
+        } catch (error) {
+          ctx.response.status = 501;
+          ctx.response.body = `Ошибка изменения тикета ${error}`;
+        }
+      } else {
+        ctx.response.body = 'the method must be "POST"';
+        ctx.response.status = 405;
+      }
+      return;
     default:
       ctx.response.status = 404;
-      // eslint-disable-next-line no-useless-return
-      return;
   }
 });
 const port = process.env.PORT || 7070;
-// eslint-disable-next-line no-unused-vars
-const server = http.createServer(app.callback()).listen(port);
+http.createServer(app.callback()).listen(port);
