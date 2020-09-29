@@ -19,6 +19,11 @@ module.exports = class TicketManager {
     this.save();
   }
 
+  deleteTicket(id) {
+    const index = this.ticketsObj.findIndex((t) => t.id === id);
+    this.ticketsObj.splice(index, 1);
+  }
+
   getAllTickets() {
     const tickets = this.ticketsObj.map((obj) => obj.ticket);
     return tickets;

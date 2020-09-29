@@ -42,6 +42,22 @@ app.use(async (ctx) => {
         ctx.response.status = 405;
       }
       return;
+    case 'deleteTicket':
+      if (ctx.request.method === 'POST') {
+        try {
+          // eslint-disable-next-line no-shadow
+          const { id } = JSON.parse(ctx.request.body);
+          ticketManager.deleteTicket(id);
+          ctx.response.status = 202;
+        } catch (error) {
+          ctx.response.status = 501;
+          ctx.response.body = `Ошибка удаления тикета ${error}`;
+        }
+      } else {
+        ctx.response.body = 'the method must be "POST"';
+        ctx.response.status = 405;
+      }
+      return;
     default:
       ctx.response.status = 404;
       // eslint-disable-next-line no-useless-return
