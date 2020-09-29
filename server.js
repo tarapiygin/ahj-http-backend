@@ -3,6 +3,7 @@ const http = require('http');
 const Koa = require('koa');
 const koaBody = require('koa-body');
 const cors = require('@koa/cors');
+const serve = require('koa-static');
 const TicketManager = require('./TicketManager');
 
 const app = new Koa();
@@ -13,6 +14,7 @@ app.use(koaBody({
   urlencoded: true,
   multipart: true,
 }));
+app.use(serve('./public'));
 app.use(async (ctx) => {
   const { method } = ctx.query;
   switch (method) {
